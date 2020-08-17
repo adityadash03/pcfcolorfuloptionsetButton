@@ -1,0 +1,22 @@
+.btn-group button {
+  background-color: transparent; /* Transparent background */
+  border: 1px solid black;
+  color: white; /* White text */
+  padding: 0 24px 1px 24px;
+  cursor: pointer;
+  float: left;
+  font-weight: normal;
+  font-size: 13px;
+  font-family: "SegoeUI", "Segoe UI";
+  height: 28px;
+  text-align: center;
+}
+
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
