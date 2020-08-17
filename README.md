@@ -6,7 +6,7 @@ This control is an OptionSet control for model driven app (D365), which will dis
 ![alternativetext](readmeimages/imgOptionSetButton.png)
 
 ## Install
- - Download the latest version of the solution from solution folder ![release](Solutions/PcfColorfulOptionsetButton_managed)
+ - Download the latest version of the solution from solution folder ![release](Solutions/)
  - Import the solution to your Dynamics 365 instance
 
 ## Control Registration Steps 
