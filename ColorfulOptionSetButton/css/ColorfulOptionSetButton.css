@@ -10,6 +10,9 @@
   font-family: "SegoeUI", "Segoe UI";
   height: 28px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn-group:after {
