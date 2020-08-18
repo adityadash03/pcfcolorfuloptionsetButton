@@ -41,7 +41,7 @@ export class ColorfulOptionSetButton
     this.theContainer = container;
     this.theContext = context;
     this.theNotifyChanged = notifyOutputChanged;
-
+    context.mode.trackContainerResize(false);
     // Get all options
     this.optionSetArray =
       context.parameters.OptionSetAttribute.attributes?.Options;
