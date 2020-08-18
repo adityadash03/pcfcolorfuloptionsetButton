@@ -55,6 +55,7 @@ export class ColorfulOptionSetButton
     // Create OptionSet Buttons
     if (this.optionSetArray) {
       let width = 100 / this.optionSetArray.length;
+      var disabled = context.mode.isControlDisabled;
       for (var i = 0; i < this.optionSetArray.length; i++) {
         // Button
         let eleButton: HTMLButtonElement;
@@ -62,6 +63,7 @@ export class ColorfulOptionSetButton
         eleButton.innerHTML = this.optionSetArray[i].Label;
         eleButton.id = this.optionSetArray[i].Value.toString();
         eleButton.style.width = width.toString() + "%";
+        eleButton.style.background = "#6f6f6f";
         eleButton.addEventListener("click", this.onButtonClick.bind(this));
 
         this.eleMainContainer.appendChild(eleButton);
@@ -104,6 +106,8 @@ export class ColorfulOptionSetButton
             elementButton.style.background = result[0].Color;
           }
         }
+
+        elementButton.disabled = context.mode.isControlDisabled;
       }
     }
   }
