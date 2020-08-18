@@ -1,7 +1,7 @@
 # pcfcolorfuloptionsetcontrol
 
 ## Control Overview
-This control is an OptionSet control for model driven app (D365), which will display all options as clickable buttons with colorful background.
+This control is an OptionSet control for model driven app (D365), which will display all options as clickable buttons with colorful background set for the options inside OptionSet. It is best works for alert types or Yes No optionsets with color coding. This control dynamically sets the buttons based on options in optionset.
 
 ![alternativetext](readmeimages/imgOptionSetButton.png)
 
