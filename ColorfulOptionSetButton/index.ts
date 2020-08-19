@@ -55,7 +55,6 @@ export class ColorfulOptionSetButton
     // Create OptionSet Buttons
     if (this.optionSetArray) {
       let width = 100 / this.optionSetArray.length;
-      var disabled = context.mode.isControlDisabled;
       for (var i = 0; i < this.optionSetArray.length; i++) {
         // Button
         let eleButton: HTMLButtonElement;
