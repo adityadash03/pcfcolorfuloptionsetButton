@@ -9,7 +9,9 @@ export class ColorfulOptionSetButton
   private theNotifyChanged: () => void;
   private theContainer: HTMLDivElement;
 
-  private _outputValue: number;
+  private _outputValue: number | null;
+  private _defaultValue: number | undefined;
+
   private optionSetArray:
     | ComponentFramework.PropertyHelper.OptionMetadata[]
     | undefined;
@@ -46,6 +48,20 @@ export class ColorfulOptionSetButton
     this.optionSetArray =
       context.parameters.OptionSetAttribute.attributes?.Options;
 
+    // Add code to update control view
+    this._defaultValue =
+      context.parameters.OptionSetAttribute.attributes?.DefaultValue;
+
+    // Current selected value
+    let currentInputData = context.parameters.OptionSetAttribute.raw || null;
+    if (currentInputData != null) {
+      this._outputValue = currentInputData;
+    } else {
+      if (this._defaultValue) {
+        this._outputValue = this._defaultValue;
+      }
+    }
+
     // UI
     // Main Container
     this.eleMainContainer = document.createElement("div");
@@ -75,37 +91,30 @@ export class ColorfulOptionSetButton
    * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
    */
   public updateView(context: ComponentFramework.Context<IInputs>): void {
-    // Add code to update control view
-    let optionSetDefaultValue =
-      context.parameters.OptionSetAttribute.attributes?.DefaultValue;
-
-    // Current selected value
-    let currentInputData = context.parameters.OptionSetAttribute.raw || null;
-    if (currentInputData != null) {
-      this._outputValue = currentInputData;
-    } else {
-      if (optionSetDefaultValue) {
-        this._outputValue = optionSetDefaultValue;
-      }
-    }
-
     if (this.eleMainContainer.children.length > 0) {
       for (var i = 0; i < this.eleMainContainer.children.length; i++) {
         let elementButton = this.eleMainContainer.children[
           i
         ] as HTMLButtonElement;
 
-        if (elementButton.id !== this._outputValue.toString()) {
+        if (
+          this._outputValue &&
+          elementButton.id !== this._outputValue.toString()
+        ) {
           elementButton.style.background = "#6f6f6f";
-        } else if (elementButton.id === this._outputValue.toString()) {
+        } else if (
+          this._outputValue &&
+          elementButton.id === this._outputValue.toString()
+        ) {
           if (this.optionSetArray) {
             var result = this.optionSetArray.filter((obj) => {
               return obj.Value === parseInt(elementButton.id);
             });
             elementButton.style.background = result[0].Color;
           }
+        } else if (!this._outputValue) {
+          elementButton.style.background = "#6f6f6f";
         }
-
         elementButton.disabled = context.mode.isControlDisabled;
       }
     }
@@ -117,14 +126,23 @@ export class ColorfulOptionSetButton
    */
   public getOutputs(): IOutputs {
     return {
-      OptionSetAttribute: this._outputValue,
+      OptionSetAttribute: this._outputValue == null ? -1 : this._outputValue,
     };
   }
 
   private onButtonClick(event: Event): void {
     // Selected button details
     let selectedElement = event.target as HTMLButtonElement;
-    if (selectedElement) this._outputValue = parseInt(selectedElement.id);
+    if (this._defaultValue && this._defaultValue > -1) {
+      if (selectedElement) this._outputValue = parseInt(selectedElement.id);
+    } else {
+      if (selectedElement.id === this._outputValue?.toString()) {
+        this._outputValue = null;
+      } else {
+        if (selectedElement) this._outputValue = parseInt(selectedElement.id);
+      }
+    }
+    // if (selectedElement) this._outputValue = parseInt(selectedElement.id);
     this.theNotifyChanged();
   }
 
